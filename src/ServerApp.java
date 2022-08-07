@@ -8,16 +8,25 @@ public class ServerApp {
     private static HashSet<String>names = new HashSet<>();
     private static HashSet<PrintWriter>writers=new HashSet<>();
 
-    public static void main(String[] args) {
-        try {
-            ServerSocket serverSocket = new ServerSocket(PORT);
-            System.out.println("Server is running in port: " + PORT);
+    public static void main(String[] args) throws IOException {
 
-            Socket localSocket = serverSocket.accept();
-            System.out.println("Client accepted..!");
+        ServerSocket serverSocket = new ServerSocket(PORT);
+        System.out.println("Server is running in port: " + PORT);
+
+        try {
+            while (true){
+
+                Socket localSocket = serverSocket.accept();
+                System.out.println("Client accepted..!");
+
+                Thread handlerThread = new Thread(new Handler(localSocket));
+                handlerThread.start();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            serverSocket.close();
         }
     }
 
