@@ -5,8 +5,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.Socket;
 
-public class AppInitializer extends Application {
+public class ClientInitializer extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -14,10 +15,11 @@ public class AppInitializer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(this.getClass().getResource("/views/LoginForm.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("/views/MessageDashboard.fxml"));
         Scene mainScene = new Scene(root);
         primaryStage.setScene(mainScene);
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
+
 }
