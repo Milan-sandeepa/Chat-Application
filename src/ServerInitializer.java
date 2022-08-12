@@ -3,10 +3,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-public class ClientInitializer extends Application {
+public class ServerInitializer extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -14,11 +15,10 @@ public class ClientInitializer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(this.getClass().getResource("/view/LoginForm.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("/view/ServerDashboard.fxml"));
         Scene mainScene = new Scene(root);
         primaryStage.setScene(mainScene);
         primaryStage.centerOnScreen();
         primaryStage.show();
     }
-
 }

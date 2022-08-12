@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="context" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="741.0" prefWidth="436.0" style="-fx-background-color: #075E54;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientFormController">
+   <top>
+      <Label prefHeight="35.0" prefWidth="151.0" text="Live Chat" textFill="#f5f6fa" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="System Bold" size="35.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets top="4.0" />
+         </BorderPane.margin>
+      </Label>
+   </top>
+   <bottom>
+      <HBox prefHeight="70.0" prefWidth="436.0" style="-fx-background-color: #ece5dd;" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="62.0" prefWidth="436.0">
+               <children>
+                  <Pane layoutX="6.0" layoutY="10.0" prefHeight="52.0" prefWidth="362.0" style="-fx-background-color: #f5f6fa; -fx-background-radius: 20;">
+                     <children>
+                        <JFXTextField fx:id="txtMessage" layoutX="48.0" layoutY="7.0" prefHeight="31.0" prefWidth="262.0" promptText="Message" style="-jfx-unfocus-color: #f5f6fa;" />
+                        <FontAwesomeIconView glyphName="CAMERA" layoutX="321.0" layoutY="33.0" size="20" />
+                        <FontAwesomeIconView glyphName="SMILE_ALT" layoutX="12.0" layoutY="36.0" size="30" />
+                     </children>
+                  </Pane>
+                  <FontAwesomeIconView glyphName="SEND" layoutX="383.0" layoutY="42.0" onMouseClicked="#sendOnAction" size="30" style="-fx-cursor: hand;" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <ScrollPane fx:id="scrollPane" prefHeight="626.0" prefWidth="436.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox fx:id="vBox" prefHeight="53.0" prefWidth="434.0" />
+         </content></ScrollPane>
+   </center>
+</BorderPane>

@@ -11,7 +11,7 @@ import java.net.URL;
 
 public class SetNavigation {
     public static void setUI(String URI, String title, AnchorPane context) throws IOException {
-        URL resource = SetNavigation.class.getResource("../views/" + URI + ".fxml");
+        URL resource = SetNavigation.class.getResource("../view/" + URI + ".fxml");
         Parent load = FXMLLoader.load(resource);
         Stage window = (Stage) context.getScene().getWindow();
         window.setTitle(title);

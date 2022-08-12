@@ -8,7 +8,7 @@
 
 <AnchorPane fx:id="context" prefHeight="778.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginFormController">
    <children>
-      <Label layoutX="146.0" layoutY="43.0" text="Live Chat">
+      <Label layoutX="70.0" layoutY="43.0" text="Play Tech Live Chat">
          <font>
             <Font name="System Bold" size="32.0" />
          </font>

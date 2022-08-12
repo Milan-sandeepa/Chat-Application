@@ -1,0 +1,59 @@
+package controller;
+
+
+import com.jfoenix.controls.JFXTextField;
+
+import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.ResourceBundle;
+
+public class ServerDashboardController implements Initializable {
+
+    public JFXTextField txtMessage;
+    public VBox vBox;
+    public ScrollPane scrollPane;
+    private String message;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    public void sendOnAction(MouseEvent mouseEvent) throws IOException {
+            message = txtMessage.getText();
+
+        if (!message.isEmpty()) {
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER_RIGHT);
+            hBox.setPadding(new Insets(5, 5, 5, 10));
+
+            Text text = new Text(message);
+            text.setFill(Color.color(0.934, 0.945, 0.996));
+            TextFlow textFlow = new TextFlow(text);
+            textFlow.setStyle("-fx-color: rgb(239,242,255);" + "-fx-background-color: rgb(15,125,242);" + "-fx-background-radius: 20px");
+            textFlow.setPadding(new Insets(5, 10, 5, 10));
+
+            hBox.getChildren().add(textFlow);
+            vBox.getChildren().add(hBox);
+
+
+            txtMessage.clear();
+        }
+    }
+
+}
