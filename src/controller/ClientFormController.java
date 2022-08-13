@@ -4,7 +4,11 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -12,8 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 
 
+import javax.imageio.ImageIO;
 import java.io.*;
 import java.net.Socket;
 
@@ -24,6 +30,7 @@ public class ClientFormController {
     public ScrollPane scrollPane;
     public VBox vBox;
     private Client client;
+    final FileChooser fileChooser = new FileChooser();
 
     public void initialize() throws IOException {
         try {
@@ -79,5 +86,30 @@ public class ClientFormController {
                 vBox.getChildren().add(hBox);
             }
         });
+    }
+
+    public void sendImageOnAction(MouseEvent mouseEvent) {
+        fileChooser.setTitle("Choose Image");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All Files", "*.*"));
+        File file = fileChooser.showOpenDialog(null);
+        if (file != null) {
+
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER_RIGHT);
+            hBox.setPadding(new Insets(5, 5, 5, 15));
+
+            Image image =new Image(file.toURI().toString());
+            ImageView imageView=new ImageView(image);
+            imageView.setFitWidth(200);
+            imageView.setFitHeight(300);
+            imageView.setStyle("-fx-border-style:solid;"+"-fx-border-color: rgb(15,125,242)");
+            hBox.getChildren().add(imageView);
+            vBox.getChildren().add(hBox);
+
+        } else {
+            System.out.println("A file is not Selected");
+        }
+
     }
 }

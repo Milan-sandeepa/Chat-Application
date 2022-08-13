@@ -31,8 +31,8 @@
                   <Pane layoutX="6.0" layoutY="10.0" prefHeight="52.0" prefWidth="362.0" style="-fx-background-color: #f5f6fa; -fx-background-radius: 20;">
                      <children>
                         <JFXTextField fx:id="txtMessage" layoutX="48.0" layoutY="7.0" prefHeight="31.0" prefWidth="262.0" promptText="Message" style="-jfx-unfocus-color: #f5f6fa;" />
-                        <FontAwesomeIconView glyphName="CAMERA" layoutX="321.0" layoutY="33.0" size="20" />
-                        <FontAwesomeIconView glyphName="SMILE_ALT" layoutX="12.0" layoutY="36.0" size="30" />
+                        <FontAwesomeIconView glyphName="CAMERA" layoutX="321.0" layoutY="33.0" onMouseClicked="#sendImageOnAction" size="20" style="-fx-cursor: hand;" />
+                        <FontAwesomeIconView glyphName="SMILE_ALT" layoutX="12.0" layoutY="36.0" size="30" style="-fx-cursor: hand;" />
                      </children>
                   </Pane>
                   <FontAwesomeIconView glyphName="SEND" layoutX="383.0" layoutY="42.0" onMouseClicked="#sendOnAction" size="30" style="-fx-cursor: hand;" />
@@ -44,7 +44,7 @@
    <center>
       <ScrollPane fx:id="scrollPane" prefHeight="626.0" prefWidth="436.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id="vBox" prefHeight="53.0" prefWidth="434.0" />
+            <VBox fx:id="vBox" prefHeight="53.0" prefWidth="410.0" />
          </content></ScrollPane>
    </center>
 </BorderPane>
