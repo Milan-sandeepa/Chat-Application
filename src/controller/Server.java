@@ -6,16 +6,18 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+
 import static controller.ClientHandler.writers;
 
 public class Server {
     private ServerSocket serverSocket;
     private Socket socket;
-    private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+    public VBox vBox;
 
-    public Server(ServerSocket serverSocket) throws IOException {
+    public Server(ServerSocket serverSocket, VBox vBox) throws IOException {
         this.serverSocket = serverSocket;
+        this.vBox = vBox;
     }
 
     public void startServer() throws IOException {
@@ -28,17 +30,19 @@ public class Server {
                 thread.start();
 
             }
+
+            System.out.println("Thread start after");
         } catch (IOException e) {
             closeServerSocket();
         }
     }
 
-    public void closeServerSocket(){
+    public void closeServerSocket() {
         try {
-            if (serverSocket != null){
+            if (serverSocket != null) {
                 serverSocket.close();
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -48,7 +52,7 @@ public class Server {
         for (BufferedWriter out : writers
         ) {
             try {
-                out.write("server :" + msg);
+                out.write("server : " + msg);
                 out.newLine();
                 out.flush();
             } catch (IOException e) {
@@ -57,7 +61,26 @@ public class Server {
         }
     }
 
-    public void receiveMessage(VBox vBox) throws IOException {
+    public void receiveMessage() throws IOException {
+        ServerDashboardController.addLabel("Server Started", vBox);
 
+        Receiving receiving = new Receiving();
+        Thread thread = new Thread(receiving);
+        thread.start();
+    }
+
+    private class Receiving implements Runnable {
+
+        @Override
+        public void run() {
+            while (!serverSocket.isClosed()) {
+                String msg = ClientHandler.input;
+                if (msg != null) {
+                    ServerDashboardController.addLabel(msg, vBox);
+                    ClientHandler.input = null;
+                }
+
+            }
+        }
     }
 }

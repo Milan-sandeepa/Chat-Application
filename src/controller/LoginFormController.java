@@ -6,10 +6,8 @@ import javafx.scene.layout.AnchorPane;
 import util.SetNavigation;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 
-public class LoginFormController  {
+public class LoginFormController {
     public static String userName;
 
     public JFXTextField txtName;
@@ -17,7 +15,7 @@ public class LoginFormController  {
 
     public void LoginOnAction(ActionEvent actionEvent) throws IOException {
         userName = txtName.getText();
-        SetNavigation.setUI("ClientForm","Client",context);
+        SetNavigation.setUI("ClientForm", "Client", context);
     }
 
 }

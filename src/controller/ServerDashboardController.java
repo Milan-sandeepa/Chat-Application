@@ -18,10 +18,8 @@ import javafx.scene.text.TextFlow;
 
 import java.io.*;
 import java.net.ServerSocket;
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class ServerDashboardController{
+public class ServerDashboardController {
 
     public JFXTextField txtMessage;
     public VBox vBox;
@@ -34,9 +32,10 @@ public class ServerDashboardController{
             try {
                 System.out.println("Server is Running");
                 ServerSocket serverSocket = new ServerSocket(8000);
-                server=new Server(serverSocket);
-                server.startServer();
+                server = new Server(serverSocket, vBox);
 
+                server.receiveMessage();
+                server.startServer();
 
             } catch (IOException e) {
                 e.printStackTrace();

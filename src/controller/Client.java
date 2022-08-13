@@ -20,7 +20,7 @@ public class Client {
     }
 
     public void sendUsername() throws IOException {
-        System.out.println("Joined Success "+name);
+        System.out.println("Joined Success " + name);
         try {
             bufferedWriter.write(name);
             bufferedWriter.newLine();
@@ -40,10 +40,8 @@ public class Client {
 
                         String msgFromChat = bufferedReader.readLine();
 
-                        ClientFormController.addLabel(msgFromChat,vBox);
+                        ClientFormController.addLabel(msgFromChat, vBox);
 
-                        //ClientFormController.addLabel(msgFromChat,vBox);
-                        // msgSend(msgclient);
                     } catch (IOException e) {
                         break;
                     }
