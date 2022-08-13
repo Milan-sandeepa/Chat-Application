@@ -33,12 +33,11 @@ public class ClientFormController {
     public void initialize() throws IOException {
             try {
                 String userName = LoginFormController.userName;
-                System.out.println("Client Server running");
+                System.out.println("Client running");
                 Socket socket = new Socket("localhost", 8000);
                 client = new Client(socket,userName);
                 client.sendUsername();
                 client.receiveMessage(vBox);
-
 
             } catch (IOException e) {
                 e.printStackTrace();

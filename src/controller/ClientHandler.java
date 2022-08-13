@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.scene.layout.VBox;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.HashSet;
@@ -11,7 +13,8 @@ public class ClientHandler implements Runnable {
     private BufferedWriter bufferedWriter;
     private String userName;
     private static HashSet<String> names = new HashSet<String>();
-    private static HashSet<BufferedWriter> writers = new HashSet<BufferedWriter>();
+    public static HashSet<BufferedWriter> writers = new HashSet<BufferedWriter>();
+    public VBox vBox;
 
     public ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
@@ -78,38 +81,6 @@ public class ClientHandler implements Runnable {
         }).start();
     }
 
-    public void sendMessage(String msg) throws IOException {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    while (socket.isConnected()) {
-                        for (BufferedWriter out : writers
-                        ) {
-                            out.write("server :" + msg);
-                            out.newLine();
-                            out.flush();
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    public void broadcastMsg() throws IOException {
-        for (BufferedWriter out : writers
-        ) {
-            if (!out.equals(bufferedWriter)) {
-                out.write("server :" + userName + " has entered the chat");
-                out.newLine();
-                out.flush();
-            }
-        }
-    }
-
     @Override
     public void run() {
         while (socket.isConnected()) {
@@ -128,18 +99,41 @@ public class ClientHandler implements Runnable {
         System.out.println(userName + " joined chat");
 
         notification();
+
         broadcast();
+    }
+
+    public void receiveMessage(VBox vBox) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (socket.isConnected()) {
+                    try {
+
+                        String msgFromChat = bufferedReader.readLine();
+
+                        ServerDashboardController.addLabel(msgFromChat,vBox);
+
+                        //ClientFormController.addLabel(msgFromChat,vBox);
+                        // msgSend(msgclient);
+                    } catch (IOException e) {
+                        break;
+                    }
+                }
+            }
+        }).start();
     }
 
     private void broadcast() {
         try {
             while (socket.isConnected()) {
                 String input = bufferedReader.readLine();
+                //  ServerDashboardController.addLabel(input,vBox);
                 if (input == null) {
                     return;
                 }
                 if (input != null) {
-                    System.out.println(input);
+
                     for (BufferedWriter out : writers
                     ) {
                         try {
@@ -155,11 +149,30 @@ public class ClientHandler implements Runnable {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                removeClient();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
+//        finally {
+//            if (names != null) {
+//                names.remove(userName);
+//            }
+//            if (bufferedWriter != null) {
+//                writers.remove(bufferedWriter);
+//            }
+//
+//            try {
+//                socket.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     private void notification() {
+
         for (BufferedWriter out : writers
         ) {
             try {
@@ -171,6 +184,25 @@ public class ClientHandler implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void removeClient() throws IOException {
+        try {
+        for (BufferedWriter out : writers
+        ) {
+                if (!out.equals(bufferedWriter)) {
+                    out.write("controller.Server : "+userName+" has left the chat");
+                    out.newLine();
+                    out.flush();
+                }
+        }
+        names.remove(userName);
+        writers.remove(bufferedWriter);
+        socket.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
