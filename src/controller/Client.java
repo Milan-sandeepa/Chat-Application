@@ -1,21 +1,29 @@
 package controller;
 
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.Scanner;
 
 public class Client {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+    private BufferedImage bufferedImage;
+    private BufferedOutputStream bufferedOutputStream;
+    private ByteArrayOutputStream byteArrayOutputStream;
     String name;
 
     public Client(Socket socket, String userName) throws IOException {
         this.socket = socket;
         this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.bufferedOutputStream=new BufferedOutputStream(socket.getOutputStream());
         this.name = userName;
     }
 
@@ -51,14 +59,18 @@ public class Client {
     }
 
     public void sendMessage(String msg) throws IOException {
-        try {
-            bufferedWriter.write(name + " : " + msg);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
+            try {
+                bufferedWriter.write(name + " : " + msg);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
 
+    public void sendImage(String URI) throws IOException {
+        System.out.println("image sending");
+        System.out.println(URI);
     }
 }

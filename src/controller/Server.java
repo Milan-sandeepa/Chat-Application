@@ -32,6 +32,7 @@ public class Server {
             }
 
             System.out.println("Thread start after");
+
         } catch (IOException e) {
             closeServerSocket();
         }
@@ -48,15 +49,17 @@ public class Server {
     }
 
     public void sendMessages(String msg) throws IOException {
-        this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        for (BufferedWriter out : writers
-        ) {
-            try {
-                out.write("server : " + msg);
-                out.newLine();
-                out.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (!writers.isEmpty()) {
+            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            for (BufferedWriter out : writers
+            ) {
+                try {
+                    out.write("server : " + msg);
+                    out.newLine();
+                    out.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

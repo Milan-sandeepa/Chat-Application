@@ -4,6 +4,8 @@ package controller;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -41,6 +43,14 @@ public class ServerDashboardController {
                 e.printStackTrace();
             }
         }).start();
+
+        vBox.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                scrollPane.setVvalue((Double) newValue);
+            }
+        });
+
     }
 
     public void sendOnAction(MouseEvent mouseEvent) throws IOException {

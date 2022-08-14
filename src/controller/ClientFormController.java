@@ -2,6 +2,8 @@ package controller;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -18,8 +20,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 
-
-import javax.imageio.ImageIO;
 import java.io.*;
 import java.net.Socket;
 
@@ -44,6 +44,13 @@ public class ClientFormController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        vBox.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                scrollPane.setVvalue((Double) newValue);
+            }
+        });
     }
 
     public void sendOnAction(MouseEvent mouseEvent) throws IOException {
@@ -88,7 +95,7 @@ public class ClientFormController {
         });
     }
 
-    public void sendImageOnAction(MouseEvent mouseEvent) {
+    public void sendImageOnAction(MouseEvent mouseEvent) throws IOException {
         fileChooser.setTitle("Choose Image");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All Files", "*.*"));
@@ -107,9 +114,32 @@ public class ClientFormController {
             hBox.getChildren().add(imageView);
             vBox.getChildren().add(hBox);
 
+            client.sendImage(file.toURI().toString());
+
         } else {
             System.out.println("A file is not Selected");
         }
 
+    }
+
+    public static void addImageLabel(Image image, VBox vBox) {
+        HBox hBox = new HBox();
+        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setPadding(new Insets(5, 10, 5, 10));
+
+        ImageView imageView=new ImageView(image);
+        imageView.setFitWidth(200);
+        imageView.setFitHeight(300);
+        imageView.setStyle("-fx-background-color: rgb(233,233,235); " +
+                "-fx-background-radius: 20px");
+        hBox.getChildren().add(imageView);
+        vBox.getChildren().add(hBox);
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                vBox.getChildren().add(hBox);
+            }
+        });
     }
 }
