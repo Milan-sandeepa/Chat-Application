@@ -7,8 +7,11 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -24,18 +27,35 @@
       </Label>
    </top>
    <bottom>
-      <HBox prefHeight="70.0" prefWidth="436.0" style="-fx-background-color: #ece5dd;" BorderPane.alignment="CENTER">
+      <HBox prefHeight="127.0" prefWidth="436.0" style="-fx-background-color: #ece5dd;" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="62.0" prefWidth="436.0">
                <children>
-                  <Pane layoutX="6.0" layoutY="10.0" prefHeight="52.0" prefWidth="362.0" style="-fx-background-color: #f5f6fa; -fx-background-radius: 20;">
+                  <Pane layoutX="6.0" layoutY="65.0" prefHeight="52.0" prefWidth="362.0" style="-fx-background-color: #f5f6fa; -fx-background-radius: 20;">
                      <children>
                         <JFXTextField fx:id="txtMessage" layoutX="48.0" layoutY="7.0" prefHeight="31.0" prefWidth="262.0" promptText="Message" style="-jfx-unfocus-color: #f5f6fa;" />
                         <FontAwesomeIconView glyphName="CAMERA" layoutX="321.0" layoutY="33.0" size="20" />
-                        <FontAwesomeIconView glyphName="SMILE_ALT" layoutX="12.0" layoutY="36.0" size="30" />
+                        <FontAwesomeIconView glyphName="SMILE_ALT" layoutX="12.0" layoutY="36.0" onMouseClicked="#OpenEmojiOnAction" size="30" />
                      </children>
                   </Pane>
-                  <FontAwesomeIconView glyphName="SEND" layoutX="383.0" layoutY="42.0" onMouseClicked="#sendOnAction" size="30" style="-fx-cursor: hand;" />
+                  <FontAwesomeIconView glyphName="SEND" layoutX="383.0" layoutY="99.0" onMouseClicked="#sendOnAction" size="30" style="-fx-cursor: hand;" />
+                  <Pane fx:id="emojiPanel" layoutX="4.0" layoutY="13.0" onMouseExited="#emojiHiddenOnAction" prefHeight="51.0" prefWidth="428.0" style="-fx-background-color: #ece5dd; -fx-background-radius: 10;">
+                     <children>
+                        <GridPane fx:id="gridPane" layoutX="7.0" layoutY="10.0" prefHeight="29.0" prefWidth="413.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="68.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="66.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.0" minWidth="10.0" prefWidth="62.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="72.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="74.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="76.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </Pane>
                </children>
             </AnchorPane>
          </children>
