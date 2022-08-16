@@ -2,6 +2,8 @@ package controller;
 
 import javafx.scene.layout.VBox;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 import java.util.HashSet;
@@ -15,12 +17,15 @@ public class ClientHandler implements Runnable {
     public static HashSet<BufferedWriter> writers = new HashSet<BufferedWriter>();
     public VBox vBox;
     public static String input;
+    private BufferedInputStream bufferedInputStream;
+    private BufferedImage bufferedImage;
 
 
     public ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
         this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.bufferedInputStream=new BufferedInputStream(socket.getInputStream());
         this.userName = bufferedReader.readLine();
     }
 
@@ -83,7 +88,7 @@ public class ClientHandler implements Runnable {
         ) {
             try {
                 if (!out.equals(bufferedWriter)) {
-                    out.write("server : " + userName + " has entered the chat");
+                    out.write("server : ------ " + userName + " has entered the chat -------");
                     out.newLine();
                     out.flush();
 
@@ -92,7 +97,7 @@ public class ClientHandler implements Runnable {
                 e.printStackTrace();
             }
         }
-        input = userName + " has entered the chat";
+        input = "------ "+userName + " has entered the chat -------";
     }
 
     public void removeClient() throws IOException {
@@ -100,13 +105,13 @@ public class ClientHandler implements Runnable {
             for (BufferedWriter out : writers
             ) {
                 if (!out.equals(bufferedWriter)) {
-                    out.write("Server : " + userName + " has left the chat");
+                    out.write("Server : ------ " + userName + " has left the chat -------");
                     out.newLine();
                     out.flush();
                 }
             }
 
-            input = userName + " has left the chat";
+            input = "------ "+userName + " has left the chat -------";
             names.remove(userName);
             writers.remove(bufferedWriter);
             socket.close();
